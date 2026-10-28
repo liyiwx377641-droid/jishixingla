@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>即时行辣 · 川味麻辣小龙虾调料 | 生活要及时行乐，嗦虾要及时行辣</title>
+<meta name="description" content="即时行辣川味麻辣小龙虾调料，四川二荆条+汉源花椒，一袋成菜做2斤小龙虾，减盐配方、0添加防腐剂，麻辣/蒜蓉/酸辣柠檬/卤香多口味可选。">
+<style>
+:root{
+  --red:#E23A2B; --red-deep:#B91C1C; --red-darker:#8F1410;
+  --bg:#FBF6F0; --card:#FFFFFF; --ink:#2A2118; --sub:#7A6E64;
+  --gold:#F5B942; --line:#EDE3D8; --soft:#F3E9DD;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:"Microsoft YaHei","PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+  background:var(--bg); color:var(--ink); line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+a{text-decoration:none;color:inherit;}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px;}
+section{scroll-margin-top:78px;}
+h2.sec{font-size:30px;font-weight:800;letter-spacing:1px;}
+h2.sec small{font-size:13px;color:var(--sub);font-weight:600;letter-spacing:3px;margin-left:12px;}
+
+/* ===== 顶部导航 ===== */
+header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+.nav{display:flex;align-items:center;justify-content:space-between;height:70px;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:21px;}
+.logo .mark{width:38px;height:38px;border-radius:9px;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;}
+.logo span.en{font-size:11px;color:var(--sub);letter-spacing:2px;font-weight:600;}
+.menu{display:flex;gap:6px;list-style:none;align-items:center;}
+.menu a{padding:9px 15px;border-radius:8px;font-size:15px;font-weight:600;color:#3a312a;transition:.2s;}
+.menu a:hover{color:var(--red);background:#fbeae8;}
+.menu a.active{color:var(--red);}
+.nav-ico{font-size:18px;color:#3a312a;cursor:pointer;}
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;}
+.burger span{width:24px;height:2.5px;background:#333;border-radius:2px;}
+#navcheck{display:none;}
+
+/* ===== 首屏 ===== */
+.hero{background:linear-gradient(120deg,#9F1410 0%,#C81E1E 45%,#E23A2B 100%);color:#fff;position:relative;overflow:hidden;}
+.hero::after{content:"";position:absolute;right:-120px;top:-120px;width:460px;height:460px;background:radial-gradient(circle,rgba(255,255,255,.14),transparent 70%);border-radius:50%;}
+.hero-inner{display:flex;align-items:center;gap:30px;padding:70px 24px 60px;max-width:1200px;margin:0 auto;position:relative;z-index:2;}
+.hero-txt{flex:1;}
+.tag-pill{display:inline-block;border:1px solid rgba(255,255,255,.55);border-radius:30px;padding:5px 16px;font-size:13px;margin-bottom:22px;}
+.hero h1{font-size:46px;line-height:1.16;font-weight:900;letter-spacing:2px;}
+.hero h1 .y{color:var(--gold);}
+.hero p.lead{margin-top:20px;font-size:16px;color:#ffe9e4;max-width:460px;}
+.hero-btns{margin-top:30px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;}
+.btn{display:inline-block;padding:13px 30px;border-radius:30px;font-weight:700;font-size:16px;transition:.2s;cursor:pointer;border:none;}
+.btn-gold{background:var(--gold);color:#5a3a05;}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.18);}
+.btn-ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.5);}
+.spicy-tags{display:flex;gap:10px;margin-top:26px;align-items:center;flex-wrap:wrap;}
+.spicy-tags .s{background:rgba(255,255,255,.16);border-radius:8px;padding:4px 12px;font-size:13px;}
+.spicy-tags .note{font-size:12.5px;color:#ffd9d2;}
+.hero-prod{flex:0 0 360px;display:flex;justify-content:center;align-items:flex-end;gap:12px;}
+.hero-prod img{height:200px;width:auto;border-radius:12px;object-fit:cover;filter:drop-shadow(0 18px 24px rgba(0,0,0,.35));}
+
+.feat-bar{background:#fff;border-bottom:1px solid var(--line);}
+.feat-grid{display:grid;grid-template-columns:repeat(4,1fr);}
+.feat{padding:30px 18px;text-align:center;position:relative;}
+.feat+.feat::before{content:"";position:absolute;left:0;top:22%;height:56%;width:1px;background:var(--line);}
+.feat .n{display:inline-flex;width:34px;height:34px;border-radius:50%;background:#fbeae8;color:var(--red);align-items:center;justify-content:center;font-weight:800;margin-bottom:8px;}
+.feat h4{font-size:17px;font-weight:800;}
+.feat p{font-size:13px;color:var(--sub);}
+
+/* ===== 产品 ===== */
+.products{padding:72px 0;}
+.prod-head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-bottom:34px;}
+.search{background:#fff;border:1px solid var(--line);border-radius:30px;padding:10px 20px;font-size:14px;color:var(--sub);min-width:280px;}
+.prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.pcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px 20px;text-align:center;transition:.25s;}
+.pcard:hover{transform:translateY(-6px);box-shadow:0 16px 34px rgba(120,60,30,.12);border-color:#f0d2c8;}
+.pcard svg{height:150px;margin-bottom:10px;}
+.pcard img{height:150px;width:auto;margin:0 auto 10px;display:block;border-radius:10px;object-fit:cover;}
+.pcard h3{font-size:17px;font-weight:800;}
+.pcard .spec{font-size:12.5px;color:var(--sub);margin:2px 0 12px;}
+.pcard .row{display:flex;align-items:center;justify-content:space-between;}
+.pcard .price{color:var(--red);font-size:22px;font-weight:900;}
+.pcard .add{font-size:13px;color:var(--red);border:1px solid #f3c4bc;border-radius:20px;padding:6px 14px;cursor:pointer;background:#fff5f3;transition:.2s;}
+.pcard .add:hover{background:var(--red);color:#fff;}
+.badge-hot{position:absolute;top:14px;left:14px;background:var(--red);color:#fff;font-size:11px;padding:3px 10px;border-radius:10px;font-weight:700;}
+.pcard{position:relative;}
+
+.source{margin-top:40px;background:#fff;border:1px solid var(--line);border-radius:18px;display:grid;grid-template-columns:1.2fr 1fr;overflow:hidden;}
+.source-txt{padding:40px;}
+.source-txt h3{font-size:24px;font-weight:800;margin-bottom:18px;}
+.source-txt li{list-style:none;margin-bottom:14px;display:flex;gap:12px;font-size:14.5px;}
+.source-txt li b{color:var(--red);white-space:nowrap;}
+.source-vis{position:relative;min-height:240px;background:linear-gradient(rgba(0,0,0,.12),rgba(0,0,0,.3)),url('farm.png') center/cover no-repeat;background-color:#4c9a2a;}
+.source-vis .badge{position:absolute;background:rgba(255,255,255,.92);border-radius:10px;padding:8px 14px;font-size:13px;font-weight:700;}
+.source-vis .b1{left:24px;top:40px;} .source-vis .b2{right:24px;bottom:40px;}
+
+/* ===== 品牌 ===== */
+.brand{padding:72px 0;background:linear-gradient(#fff,#faf2ea);}
+.adv-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin:36px 0;}
+.hex{background:#fff;border:1px solid var(--line);border-radius:16px;padding:34px 18px;text-align:center;}
+.hex .ico{width:70px;height:70px;margin:0 auto 14px;border-radius:50%;background:linear-gradient(145deg,#fdeee0,#fbd9c4);display:flex;align-items:center;justify-content:center;font-size:28px;}
+.hex h4{font-size:16px;font-weight:800;color:var(--red-deep);}
+.hex p{font-size:12.5px;color:var(--sub);}
+.about{background:#fff;border:1px solid var(--line);border-radius:18px;padding:42px;display:grid;grid-template-columns:1.6fr 1fr;gap:34px;align-items:center;}
+.about h3{font-size:24px;font-weight:800;margin-bottom:14px;}
+.about p{font-size:14.5px;margin-bottom:12px;color:#4a4038;}
+.about .chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;}
+.about .chips span{border:1px solid var(--red);color:var(--red);border-radius:6px;padding:4px 12px;font-size:12.5px;}
+.about-people{text-align:center;}
+.about-people .avatar{width:160px;height:160px;border-radius:50%;margin:0 auto 12px;background:linear-gradient(145deg,#c81e1e,#8f1410);overflow:hidden;border:4px solid #fbd9c4;}
+.about-people .avatar img{width:100%;height:100%;object-fit:cover;display:block;}
+.about-people .cap{font-size:13px;color:var(--sub);font-weight:700;}
+
+/* ===== 食谱 ===== */
+.recipe{padding:72px 0;}
+.recipe-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:36px;}
+.rcard{border-radius:16px;overflow:hidden;position:relative;min-height:210px;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;padding:22px;}
+.rcard::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.65));}
+.rcard.r1{background:url('food_mala.png') center/cover;}
+.rcard.r2{background:url('food_garlic.png') center/cover;}
+.rcard.r3{background:url('food_xiangguo.png') center/cover;}
+.rcard.r4{background:url('food_luwei.png') center/cover;}
+.rcard h4,.rcard p{position:relative;z-index:2;}
+.rcard h4{font-size:18px;font-weight:800;}
+.rcard p{font-size:13px;color:#fff5ec;}
+
+/* ===== 新闻 ===== */
+.news{padding:72px 0;background:#fff;}
+.news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:36px;}
+.ncard{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;transition:.2s;}
+.ncard:hover{box-shadow:0 12px 26px rgba(0,0,0,.08);transform:translateY(-4px);}
+.ncard .thumb{height:150px;overflow:hidden;}
+.ncard .thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+.ncard .body{padding:18px;}
+.ncard .date{font-size:12px;color:var(--sub);}
+.ncard h4{font-size:15.5px;font-weight:800;margin:6px 0;}
+.ncard p{font-size:13px;color:var(--sub);}
+
+/* ===== 联系 ===== */
+.contact{padding:72px 0;}
+.contact-box{display:grid;grid-template-columns:1fr 1.2fr;gap:40px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:42px;}
+.contact-info h3{font-size:22px;font-weight:800;margin-bottom:18px;}
+.contact-info p{font-size:14.5px;margin-bottom:12px;color:#4a4038;}
+.contact-form .frow{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.contact-form input,.contact-form textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:14px;font-family:inherit;background:#fdfaf7;}
+.contact-form textarea{resize:vertical;min-height:110px;margin-bottom:14px;}
+.contact-form input:focus,.contact-form textarea:focus{outline:none;border-color:var(--red);}
+
+/* ===== 页脚 ===== */
+footer{background:var(--ink);color:#cfc6bb;padding:50px 0 26px;}
+.f-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:30px;}
+.f-grid h5{color:#fff;font-size:15px;margin-bottom:14px;}
+.f-grid p,.f-grid li{font-size:13px;list-style:none;margin-bottom:8px;}
+.f-brand .logo{color:#fff;margin-bottom:12px;}
+.f-brand .logo .mark{background:var(--red);}
+.f-bottom{border-top:1px solid #3d342b;margin-top:36px;padding-top:20px;text-align:center;font-size:12.5px;color:#9a9086;}
+
+#toast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:11px 22px;border-radius:30px;font-size:14px;opacity:0;pointer-events:none;transition:.3s;z-index:200;}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+@media(max-width:960px){
+  .hero h1{font-size:42px;}
+  .hero-prod{flex-basis:300px;}
+  .prod-grid{grid-template-columns:repeat(2,1fr);}
+  .adv-grid,.recipe-grid{grid-template-columns:repeat(2,1fr);}
+  .news-grid{grid-template-columns:1fr;}
+  .feat-grid{grid-template-columns:repeat(2,1fr);}
+  .feat+.feat::before{display:none;}
+  .source,.about,.contact-box{grid-template-columns:1fr;}
+  .f-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:680px){
+  .menu{position:absolute;top:70px;left:0;right:0;background:#fff;flex-direction:column;align-items:stretch;padding:10px 16px;border-bottom:1px solid var(--line);display:none;}
+  .menu a{padding:12px 10px;}
+  .burger{display:flex;}
+  #navcheck:checked ~ .menu{display:flex;}
+  .nav-ico{display:none;}
+  .hero-inner{flex-direction:column;text-align:center;padding:50px 20px 44px;}
+  .hero h1{font-size:36px;}
+  .hero p.lead{margin-left:auto;margin-right:auto;}
+  .hero-btns,.spicy-tags{justify-content:center;}
+  .hero-prod{flex-basis:auto;}
+  .prod-grid{grid-template-columns:1fr;}
+  .adv-grid,.recipe-grid,.feat-grid{grid-template-columns:1fr;}
+  .contact-form .frow{grid-template-columns:1fr;}
+  .f-grid{grid-template-columns:1fr;}
+  h2.sec{font-size:24px;}
+  .search{min-width:0;width:100%;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="logo"><span class="mark">即</span>即时行辣 <span class="en">JISHI XINGLA</span></div>
+    <input type="checkbox" id="navcheck">
+    <label class="burger" for="navcheck"><span></span><span></span><span></span></label>
+    <ul class="menu">
+      <li><a href="#home" class="active">首页</a></li>
+      <li><a href="#products">产品中心</a></li>
+      <li><a href="#brand">品牌故事</a></li>
+      <li><a href="#recipe">美食食谱</a></li>
+      <li><a href="#news">新闻动态</a></li>
+      <li><a href="#contact">联系我们</a></li>
+    </ul>
+    <span class="nav-ico">&#128269;</span>
+  </div>
+</header>
+
+<!-- 首屏 -->
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <div class="hero-txt">
+      <span class="tag-pill">伞塔40年川味工艺 · 年轻化子品牌</span>
+      <h1>生活要及时行乐<br><span class="y">嗦虾要及时行辣</span></h1>
+      <p class="lead">四川二荆条 × 汉源花椒，地道川味麻辣鲜香；<br>一袋做2斤小龙虾，减盐配方 · 0添加防腐剂</p>
+      <div class="hero-btns">
+        <a href="#products" class="btn btn-gold">探索小龙虾调料 &rsaquo;</a>
+        <a href="#brand" class="btn btn-ghost">了解品牌故事</a>
+      </div>
+      <div class="spicy-tags">
+        <span class="s">微辣 ★</span>
+        <span class="s">中辣 ★★</span>
+        <span class="s">麻辣 ★★★</span>
+        <span class="note">一袋成菜 · 还可做麻辣香锅 / 辣卤海鲜</span>
+      </div>
+    </div>
+    <div class="hero-prod" id="heroProd"></div>
+  </div>
+</section>
+
+<!-- 特点条 -->
+<div class="feat-bar">
+  <div class="wrap feat-grid">
+    <div class="feat"><span class="n">1</span><h4>地道川味</h4><p>二荆条+汉源花椒</p></div>
+    <div class="feat"><span class="n">2</span><h4>一袋成菜</h4><p>一袋做2斤小龙虾</p></div>
+    <div class="feat"><span class="n">3</span><h4>减盐健康</h4><p>减盐配方0防腐剂</p></div>
+    <div class="feat"><span class="n">4</span><h4>多口味可选</h4><p>麻辣/蒜蓉/酸辣/卤香</p></div>
+  </div>
+</div>
+
+<!-- 产品 -->
+<section class="products" id="products">
+  <div class="wrap">
+    <div class="prod-head">
+      <h2 class="sec">产品中心 <small>CRAWFISH SEASONING</small></h2>
+      <div class="search">&#128269; 搜索麻辣 / 蒜蓉 / 辣度 / 一人食</div>
+    </div>
+    <div class="prod-grid" id="prodGrid"></div>
+
+    <div class="source">
+      <div class="source-txt">
+        <h3>地道川味，从源头把控</h3>
+        <ul>
+          <li><b>原料直采</b><span>与四川、贵州、湖南辣椒及汉源花椒产区合作基地直采，当季原料当日入厂，从田间到车间不超过24小时。</span></li>
+          <li><b>伞塔工艺</b><span>依托成都伞塔食品40余年川调工艺积淀，通过ISO9001与ISO22000双体系认证，川味配方功底扎实。</span></li>
+          <li><b>严格检测</b><span>建立原料入厂、过程巡检、成品出厂三级检测体系，每批次留样检测，做到批批可溯源。</span></li>
+        </ul>
+      </div>
+      <div class="source-vis">
+        <span class="badge b1">&#127798; 辣椒花椒直采基地</span>
+        <span class="badge b2">&#128269; 三级品控检测</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 品牌故事 -->
+<section class="brand" id="brand">
+  <div class="wrap">
+    <h2 class="sec">品牌故事</h2>
+    <div class="adv-grid">
+      <div class="hex"><div class="ico">&#127798;</div><h4>地道川味</h4><p>二荆条+汉源花椒</p></div>
+      <div class="hex"><div class="ico">&#127836;</div><h4>一袋成菜</h4><p>一袋做2斤小龙虾</p></div>
+      <div class="hex"><div class="ico">0</div><h4>0防腐剂</h4><p>减盐配方吃得放心</p></div>
+      <div class="hex"><div class="ico">&#127858;</div><h4>易撕口设计</h4><p>包装好撕不脏手</p></div>
+    </div>
+    <div class="about">
+      <div>
+        <h3>关于我们</h3>
+        <p>成都伞塔食品有限公司创立于1980年，是拥有四十余年积淀的川味调味品老牌企业，通过ISO9001质量管理体系与ISO22000食品安全管理体系认证。为顺应消费年轻化趋势，品牌依托母品牌工艺积淀推出年轻化子品牌"即时行辣"，取"及时行乐"谐音。</p>
+        <p>品牌聚焦川味麻辣小龙虾调味料，主打"地道川味、一袋成菜、健康配方"，以四川二荆条、汉源花椒还原地道川式麻辣鲜香，推出150g一人食小袋、220g家庭常规装与三味组合装，覆盖夜宵追剧、一人食虾尾、家庭聚餐、户外露营等场景。</p>
+        <div class="chips"><span>ISO9001质量体系</span><span>ISO22000食品安全</span><span>SC食品生产许可</span><span>批批检测可溯源</span></div>
+      </div>
+      <div class="about-people"><div class="avatar"><img src="chef.png" alt="即时行辣主理人"></div><div class="cap">即时行辣 · 鲜辣主理人</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 美食食谱 -->
+<section class="recipe" id="recipe">
+  <div class="wrap">
+    <h2 class="sec">美食食谱 <small>一袋成菜</small></h2>
+    <div class="recipe-grid">
+      <div class="rcard r1"><h4>招牌麻辣小龙虾</h4><p>一袋做2斤虾，10分钟搞定，夜宵搭子。</p></div>
+      <div class="rcard r2"><h4>蒜蓉小龙虾</h4><p>蒜香浓郁，不辣也过瘾，家庭聚餐首选。</p></div>
+      <div class="rcard r3"><h4>麻辣香锅</h4><p>还能做香锅，虾尾、藕片、土豆一起炒。</p></div>
+      <div class="rcard r4"><h4>辣卤海鲜</h4><p>虾尾、花甲卤一锅，追剧下酒绝配。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 新闻动态 -->
+<section class="news" id="news">
+  <div class="wrap">
+    <h2 class="sec">新闻动态</h2>
+    <div class="news-grid">
+      <div class="ncard"><div class="thumb"><img src="prod_combo.png" alt="新品上市"></div><div class="body">
+        <div class="date">2026-10-15</div><h4>新品上市 · 麻辣小龙虾调料</h4><p>核心爆品上线，地道川味，一袋做2斤小龙虾。</p></div></div>
+      <div class="ncard"><div class="thumb"><img src="promo.png" alt="双11大促"></div><div class="body">
+        <div class="date">2026-10-01</div><h4>开学季 / 双11大促启动</h4><p>满减、新人券、三味组合装限时优惠。</p></div></div>
+      <div class="ncard"><div class="thumb"><img src="farm.png" alt="辣椒基地"></div><div class="body">
+        <div class="date">2026-09-20</div><h4>走进川渝辣椒花椒基地</h4><p>二荆条、汉源花椒当季直采，从源头把控风味。</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 联系我们 -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="contact-box">
+      <div class="contact-info">
+        <h3>联系我们</h3>
+        <p>&#128222; 客服热线：400-XXX-XXXX（工作日 9:00—21:00）</p>
+        <p>&#9993; 合作邮箱：business@jishixingla.cn</p>
+        <p>&#128172; 微信公众号 / 视频号：即时行辣</p>
+        <p>&#128205; 品牌运营中心：四川省成都市</p>
+      </div>
+      <form class="contact-form" onsubmit="return sendMsg(event)">
+        <div class="frow"><input type="text" placeholder="您的称呼" required><input type="tel" placeholder="联系电话 / 微信"></div>
+        <textarea placeholder="想咨询的内容（合作、团购、售后等）" required></textarea>
+        <button type="submit" class="btn btn-gold">提交留言</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="f-grid">
+      <div class="f-brand">
+        <div class="logo"><span class="mark">即</span>即时行辣</div>
+        <p>生活要及时行乐，嗦虾要及时行辣。</p>
+        <p>伞塔食品旗下年轻化川味小龙虾调料品牌，地道川味、一袋成菜。</p>
+      </div>
+      <div><h5>联系我们</h5><p>客服热线 400-XXX-XXXX</p><p>合作邮箱 business@jishixingla.cn</p></div>
+      <div><h5>关注我们</h5><p>微信公众号：即时行辣</p><p>微信视频号：即时行辣</p></div>
+      <div><h5>备案信息</h5><p>蜀ICP备XXXXXXXX号</p><p>食品生产许可证 SCXXXXXXXXXX</p></div>
+    </div>
+    <div class="f-bottom">© 2026 即时行辣 JISHI XINGLA · 成都伞塔食品有限公司 · 本页面为课程设计演示作品，部分信息为示例内容</div>
+  </div>
+</footer>
+
+<div id="toast"></div>
+
+<script>
+/* ===== 产品数据（小龙虾调料） ===== */
+const PRODUCTS=[
+  {name:'麻辣小龙虾调料',spec:'220g家庭装 · 麻辣 ★★★',desc:'核心爆品，二荆条+汉源花椒',price:15.9,bag:'#C81E1E',band:'#8F1410',label:'#FFF',txt:'麻辣',sub:'小龙虾调料',hot:true,img:'prod_mala.png'},
+  {name:'麻辣小龙虾调料（一人食）',spec:'150g小袋装 · 麻辣 ★★★',desc:'一人食虾尾，刚好一顿',price:9.9,bag:'#C81E1E',band:'#8F1410',label:'#FFF',txt:'麻辣',sub:'一人食150g',img:'prod_mala_single.png'},
+  {name:'蒜蓉小龙虾调料',spec:'220g家庭装 · 蒜香不辣',desc:'辅助爆款，蒜香浓郁',price:14.9,bag:'#E8B93B',band:'#B8871F',label:'#5a3a05',txt:'蒜蓉',sub:'小龙虾调料',img:'prod_garlic.png'},
+  {name:'酸辣柠檬小龙虾调料',spec:'200g袋装 · 微辣 ★',desc:'创新口味，夏天开胃解腻',price:13.9,bag:'#F5C84B',band:'#D9A82E',label:'#5a3a05',txt:'酸辣柠檬',sub:'创新口味',img:'prod_lemon.png'},
+  {name:'卤香小龙虾调料',spec:'200g袋装 · 中辣 ★★',desc:'老卤风味，还可卤海鲜',price:13.9,bag:'#8B5A2B',band:'#6B421D',label:'#FFF',txt:'卤香',sub:'小龙虾调料',img:'prod_spiced.png'},
+  {name:'三味畅享组合装',spec:'麻辣+蒜蓉+酸辣 三味',desc:'一次尝遍招牌三味，送礼自吃皆宜',price:39.9,bag:'#E23A2B',band:'#B91C1C',label:'#FFF',txt:'三味组合',sub:'麻辣/蒜蓉/酸辣',hot:true,img:'prod_combo.png'}
+];
+
+/* ===== 自立袋SVG ===== */
+function bagSVG(p,h){
+  const vb='viewBox="0 0 130 175"';
+  // 顶部锯齿封口
+  let teeth='';
+  for(let x=8;x<122;x+=8){
+    teeth+=`M${x} 18 L${x+4} 10 L${x+8} 18 `;
+  }
+  return `<svg ${vb} height="${h||160}" xmlns="http://www.w3.org/2000/svg">
+    <path d="M8 18 L8 150 Q8 162 20 162 L110 162 Q122 162 122 150 L122 18 Z" fill="${p.bag}" stroke="rgba(0,0,0,.12)" stroke-width="1.5"/>
+    <path d="${teeth}" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="1"/>
+    <rect x="8" y="18" width="114" height="14" fill="${p.band}"/>
+    <text x="65" y="29" text-anchor="middle" font-size="9" fill="#fff" font-weight="bold">即时行辣</text>
+    <rect x="18" y="48" width="94" height="62" rx="6" fill="#fff" opacity="0.96"/>
+    <text x="65" y="80" text-anchor="middle" font-size="17" fill="${p.label==='#FFF'?'#C81E1E':'#5a3a05'}" font-weight="bold">${p.txt}</text>
+    <text x="65" y="98" text-anchor="middle" font-size="9" fill="#8a7a6a">${p.sub}</text>
+    <rect x="28" y="120" width="74" height="20" rx="10" fill="${p.band}"/>
+    <text x="65" y="134" text-anchor="middle" font-size="10" fill="#fff" font-weight="bold">一袋做2斤虾</text>
+  </svg>`;
+}
+
+document.getElementById('prodGrid').innerHTML=PRODUCTS.map(p=>`
+  <div class="pcard">
+    ${p.hot?'<span class="badge-hot">爆品</span>':''}
+    ${p.img?`<img src="${p.img}" alt="${p.name}">`:bagSVG(p,150)}
+    <h3>${p.name}</h3>
+    <div class="spec">${p.spec}<br>${p.desc}</div>
+    <div class="row">
+      <span class="price">¥${p.price}</span>
+      <span class="add" onclick="addCart('${p.name}')">加入购物车</span>
+    </div>
+  </div>`).join('');
+
+document.getElementById('heroProd').innerHTML=
+  `<img src="prod_mala.png" alt="麻辣小龙虾调料">`+
+  `<img src="prod_garlic.png" alt="蒜蓉小龙虾调料">`+
+  `<img src="prod_combo.png" alt="三味畅享组合装">`;
+
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),1800);
+}
+function addCart(name){toast('已加入购物车：'+name);}
+function sendMsg(e){e.preventDefault();toast('留言已提交，感谢您的联系！');e.target.reset();return false;}
+
+const links=document.querySelectorAll('.menu a');
+const secs=[...document.querySelectorAll('section')];
+window.addEventListener('scroll',()=>{
+  let cur=secs[0].id;
+  secs.forEach(s=>{if(window.scrollY>=s.offsetTop-120)cur=s.id;});
+  links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>即时行辣 · 小龙虾调料小程序</title>
+<style>
+:root{--red:#E23A2B;--red-d:#B91C1C;--bg:#F5F5F7;--card:#fff;--ink:#222;--sub:#888;--gold:#F5B942;--line:#eee;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#e9e9ee;color:var(--ink);}
+.phone{max-width:420px;margin:0 auto;background:var(--bg);min-height:100vh;position:relative;display:flex;flex-direction:column;box-shadow:0 0 30px rgba(0,0,0,.1);}
+/* 状态栏 */
+.status{height:34px;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 18px;font-size:13px;font-weight:600;}
+/* 顶部导航 */
+.topbar{background:var(--red);color:#fff;padding:6px 14px 14px;}
+.search{background:#fff;border-radius:20px;height:36px;display:flex;align-items:center;padding:0 14px;color:#999;font-size:13px;gap:8px;}
+.search input{border:none;outline:none;flex:1;font-size:13px;}
+/* 内容 */
+.pages{flex:1;overflow-y:auto;padding-bottom:70px;}
+.page{display:none;}
+.page.active{display:block;}
+/* 首页banner */
+.banner{margin:12px;border-radius:14px;overflow:hidden;height:150px;position:relative;background:linear-gradient(120deg,#9F1410,#E23A2B);}
+.banner img{width:100%;height:100%;object-fit:cover;}
+.banner .ov{position:absolute;left:0;right:0;bottom:0;padding:14px;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.55));}
+.banner .ov h2{font-size:18px;}
+.banner .ov p{font-size:12px;opacity:.9;}
+/* 分类宫格 */
+.cats{background:#fff;margin:12px;border-radius:14px;padding:16px 8px;display:grid;grid-template-columns:repeat(5,1fr);gap:10px;text-align:center;}
+.cats .c{font-size:12px;color:#444;}
+.cats .c .ic{width:46px;height:46px;border-radius:12px;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-size:22px;}
+/* 促销条 */
+.promo{margin:12px;background:linear-gradient(90deg,#FFF3E0,#FFE0D6);border-radius:12px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;}
+.promo .t{font-size:13px;color:#B91C1C;font-weight:700;}
+.promo .p{font-size:12px;color:#B91C1C;}
+/* 区块标题 */
+.sec-t{padding:16px 14px 8px;display:flex;justify-content:space-between;align-items:center;}
+.sec-t h3{font-size:16px;font-weight:800;}
+.sec-t span{font-size:12px;color:#999;}
+/* 产品卡片列表 */
+.plist{padding:0 12px;}
+.pitem{background:#fff;border-radius:14px;margin-bottom:12px;display:flex;padding:12px;gap:12px;}
+.pitem img{width:100px;height:100px;border-radius:10px;object-fit:cover;flex-shrink:0;}
+.pitem .info{flex:1;display:flex;flex-direction:column;}
+.pitem .n{font-size:15px;font-weight:700;}
+.pitem .s{font-size:12px;color:#999;margin:3px 0;flex:1;}
+.pitem .pr{color:var(--red);font-size:18px;font-weight:800;}
+.pitem .pr small{font-size:11px;font-weight:400;}
+.pitem .buy{background:var(--red);color:#fff;border-radius:16px;padding:5px 14px;font-size:12px;align-self:flex-end;border:none;}
+.tag-hot{position:absolute;background:var(--gold);color:#5a3a05;font-size:10px;padding:1px 6px;border-radius:6px;font-weight:700;}
+/* 分类页 */
+.catpage{display:flex;min-height:100vh;}
+.side{width:84px;background:#f3f3f5;}
+.side .s{padding:16px 8px;text-align:center;font-size:13px;color:#555;}
+.side .s.on{background:#fff;color:var(--red);font-weight:700;border-left:3px solid var(--red);}
+.main{flex:1;padding:10px;}
+.main .row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.main .g{background:#fff;border-radius:10px;overflow:hidden;}
+.main .g img{width:100px;height:100px;width:100%;}
+.main .g .b{padding:8px;}
+.main .g .p{color:var(--red);font-weight:800;font-size:15px;}
+/* 购物车 */
+.cartempty{text-align:center;padding:80px 0;color:#bbb;}
+.cartempty .e{font-size:50px;}
+.citem{background:#fff;margin:10px 12px;border-radius:12px;padding:12px;display:flex;gap:12px;align-items:center;}
+.citem img{width:70px;height:70px;border-radius:8px;object-fit:cover;}
+.citem .info{flex:1;}
+.citem .info .n{font-size:14px;font-weight:600;}
+.citem .info .pr{color:var(--red);font-weight:800;margin-top:4px;}
+.checkbar{position:absolute;left:0;right:0;bottom:60px;background:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);}
+.checkbar .sum{font-size:13px;}
+.checkbar .sum b{color:var(--red);font-size:18px;}
+.checkbar button{background:var(--red);color:#fff;border:none;border-radius:20px;padding:10px 26px;font-weight:700;}
+/* 我的 */
+.me-head{background:linear-gradient(135deg,#C81E1E,#8F1410);color:#fff;padding:24px 18px 30px;display:flex;align-items:center;gap:14px;}
+.me-head .av{width:60px;height:60px;border-radius:50%;background:#fff;overflow:hidden;}
+.me-head .av img{width:100%;height:100%;object-fit:cover;}
+.me-head .nm{font-size:18px;font-weight:800;}
+.me-head .lv{font-size:12px;opacity:.9;margin-top:4px;}
+.me-grid{background:#fff;margin:-18px 12px 12px;border-radius:14px;padding:16px;display:grid;grid-template-columns:repeat(4,1fr);text-align:center;}
+.me-grid .it{font-size:12px;color:#555;}
+.me-grid .it .num{font-size:18px;font-weight:800;color:#222;display:block;}
+.me-list{background:#fff;margin:0 12px;border-radius:14px;overflow:hidden;}
+.me-list .li{padding:15px 16px;border-bottom:1px solid #f2f2f2;font-size:14px;display:flex;justify-content:space-between;}
+.me-list .li:last-child{border:none;}
+.me-list .li span{color:#ccc;}
+/* 底部tabbar */
+.tabbar{position:absolute;bottom:0;left:0;right:0;height:60px;background:#fff;border-top:1px solid #eee;display:flex;}
+.tabbar .tb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;color:#999;gap:3px;cursor:pointer;}
+.tabbar .tb .ic{font-size:20px;}
+.tabbar .tb.on{color:var(--red);}
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="status"><span>9:41</span><span>即时行辣 · 5G · 100%</span></div>
+  <div class="topbar">
+    <div class="search">&#128269;<input type="text" placeholder="搜麻辣小龙虾调料 / 蒜蓉 / 一人食"></div>
+  </div>
+
+  <div class="pages">
+    <!-- 首页 -->
+    <div class="page active" id="p-home">
+      <div class="banner"><img src="prod_mala.png" alt=""><div class="ov"><h2>生活要及时行乐</h2><p>嗦虾要及时行辣 · 一袋做2斤虾</p></div></div>
+      <div class="cats">
+        <div class="c"><div class="ic" style="background:#ffe5e0">&#129418;</div>麻辣</div>
+        <div class="c"><div class="ic" style="background:#fff3cd">&#129388;</div>蒜蓉</div>
+        <div class="c"><div class="ic" style="background:#fff8d6">&#127818;</div>酸辣柠檬</div>
+        <div class="c"><div class="ic" style="background:#f0e2d0">&#127837;</div>卤香</div>
+        <div class="c"><div class="ic" style="background:#ffe0e0">&#127873;</div>组合装</div>
+      </div>
+      <div class="promo"><div><div class="t">&#127881; 双11狂欢</div><div style="font-size:11px;color:#888">满39减8 · 新人0元尝鲜</div></div><div class="p">立即抢 ></div></div>
+      <div class="sec-t"><h3>&#128293; 热销推荐</h3><span>查看全部 ></span></div>
+      <div class="plist" id="homeList"></div>
+    </div>
+
+    <!-- 分类 -->
+    <div class="page" id="p-cat">
+      <div class="catpage">
+        <div class="side">
+          <div class="s on">全部</div><div class="s">麻辣味</div><div class="s">蒜蓉味</div>
+          <div class="s">酸辣柠檬</div><div class="s">卤香味</div><div class="s">组合装</div><div class="s">一人食</div>
+        </div>
+        <div class="main">
+          <div class="row" id="catGrid"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 购物车 -->
+    <div class="page" id="p-cart">
+      <div class="sec-t"><h3>购物车</h3></div>
+      <div id="cartList"></div>
+      <div class="checkbar" id="checkbar" style="display:none">
+        <div class="sum">合计：<b id="sum">¥0</b></div>
+        <button onclick="toast('下单成功（演示）')">去结算</button>
+      </div>
+    </div>
+
+    <!-- 我的 -->
+    <div class="page" id="p-me">
+      <div class="me-head">
+        <div class="av"><img src="chef.png" alt=""></div>
+        <div><div class="nm">辣友小鲜</div><div class="lv">&#11088; 黄金会员 · 积分 268</div></div>
+      </div>
+      <div class="me-grid">
+        <div class="it"><span class="num">2</span>待付款</div>
+        <div class="it"><span class="num">1</span>待发货</div>
+        <div class="it"><span class="num">3</span>待收货</div>
+        <div class="it"><span class="num">0</span>待评价</div>
+      </div>
+      <div class="me-list">
+        <div class="li">我的优惠券 <span>3张 ></span></div>
+        <div class="li">我的收藏 <span>></span></div>
+        <div class="li">收货地址 <span>></span></div>
+        <div class="li">会员中心 <span>黄金会员 ></span></div>
+        <div class="li">联系客服 <span>></span></div>
+        <div class="li">关于即时行辣 <span>></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- tabbar -->
+  <div class="tabbar">
+    <div class="tb on" onclick="go('home',this)"><span class="ic">&#127968;</span>首页</div>
+    <div class="tb" onclick="go('cat',this)"><span class="ic">&#128193;</span>分类</div>
+    <div class="tb" onclick="go('cart',this)"><span class="ic">&#128722;</span>购物车</div>
+    <div class="tb" onclick="go('me',this)"><span class="ic">&#128100;</span>我的</div>
+  </div>
+</div>
+
+<script>
+const PRODUCTS=[
+  {n:'麻辣小龙虾调料 220g',s:'核心爆品 · 麻辣★★★',p:15.9,img:'prod_mala.png',hot:true},
+  {n:'麻辣一人食 150g',s:'一人食虾尾 · 麻辣★★★',p:9.9,img:'prod_mala_single.png'},
+  {n:'蒜蓉小龙虾调料',s:'蒜香浓郁 · 不辣',p:14.9,img:'prod_garlic.png'},
+  {n:'酸辣柠檬小龙虾',s:'创新口味 · 微辣★',p:13.9,img:'prod_lemon.png'},
+  {n:'卤香小龙虾调料',s:'老卤风味 · 中辣★★',p:13.9,img:'prod_spiced.png'},
+  {n:'三味畅享组合装',s:'麻辣+蒜蓉+酸辣',p:39.9,img:'prod_combo.png',hot:true}
+];
+// 首页列表
+document.getElementById('homeList').innerHTML=PRODUCTS.map((p,i)=>`
+  <div class="pitem" style="position:relative">
+    ${p.hot?'<span class="tag-hot">爆品</span>':''}
+    <img src="${p.img}" alt="${p.n}">
+    <div class="info">
+      <div class="n">${p.n}</div>
+      <div class="s">${p.s}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span class="pr"><small>¥</small>${p.p}</span>
+        <button class="buy" onclick="addCart(${i})">加入购物车</button>
+      </div>
+    </div>
+  </div>`).join('');
+// 分类网格
+document.getElementById('catGrid').innerHTML=PRODUCTS.map(p=>`
+  <div class="g"><img src="${p.img}" alt=""><div class="b"><div style="font-size:13px">${p.n}</div><div class="p">¥${p.p}</div></div></div>`).join('');
+
+let cart=[];
+function addCart(i){cart.push(PRODUCTS[i]);renderCart();toast('已加入购物车');}
+function renderCart(){
+  const el=document.getElementById('cartList');
+  if(cart.length===0){el.innerHTML='<div class="cartempty"><div class="e">&#128722;</div><p style="margin-top:10px">购物车还是空的</p><p style="font-size:12px;margin-top:4px">去首页挑点好吃的吧</p></div>';document.getElementById('checkbar').style.display='none';return;}
+  el.innerHTML=cart.map((p,idx)=>`<div class="citem"><img src="${p.img}"><div class="info"><div class="n">${p.n}</div><div class="pr">¥${p.p}</div></div><button class="buy" onclick="delCart(${idx})" style="background:#eee;color:#666">删除</button></div>`).join('');
+  const sum=cart.reduce((a,b)=>a+b.p,0);
+  document.getElementById('sum').textContent='¥'+sum.toFixed(1);
+  document.getElementById('checkbar').style.display='flex';
+}
+function delCart(i){cart.splice(i,1);renderCart();}
+renderCart();
+
+function go(name,el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('p-'+name).classList.add('active');
+  document.querySelectorAll('.tabbar .tb').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  document.querySelector('.pages').scrollTop=0;
+}
+function toast(m){
+  let t=document.createElement('div');
+  t.textContent=m;t.style='position:fixed;left:50%;bottom:100px;transform:translateX(-50%);background:rgba(0,0,0,.75);color:#fff;padding:8px 18px;border-radius:20px;font-size:13px;z-index:99';
+  document.body.appendChild(t);setTimeout(()=>t.remove(),1500);
+}
+</script>
+</body>
+</html>
